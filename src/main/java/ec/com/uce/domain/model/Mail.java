@@ -1,5 +1,6 @@
 package ec.com.uce.domain.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "mail")
-public class Mail {
+public class Mail extends PanacheEntityBase{
     @Id
     @SequenceGenerator(name = "seq_mail_generador", sequenceName = "seq_mail", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_mail_generador")
@@ -88,6 +89,7 @@ public class Mail {
         return "Mail [id=" + id + ", direccionOrigen=" + direccionOrigen + ", direccionDestino=" + direccionDestino
                 + ", asunto=" + asunto + ", cuerpo=" + cuerpo + ", prioridad=" + prioridad + "]";
     }
+    
     
 
 

@@ -2,9 +2,10 @@ package ec.com.uce;
 
 import java.time.LocalDate;
 
-
+import ec.com.uce.application.service.FacturaService;
 import ec.com.uce.application.service.MailService;
 import ec.com.uce.application.service.ReporteService;
+import ec.com.uce.domain.model.Factura;
 import ec.com.uce.domain.model.Mail;
 import ec.com.uce.domain.model.Reporte;
 import io.quarkus.runtime.Quarkus;
@@ -18,40 +19,25 @@ public class Main {
         Quarkus.run(App.class, args);    
     }
     public static class App implements QuarkusApplication{
+        @Inject
+        private FacturaService facturaService;
 
-        @Inject
-        private MailService mailService;
-        @Inject
-        private ReporteService reporteService;
         @Override
         public int run(String... args) throws Exception {
-       
+            String nombreHilo = Thread.currentThread().getName();
+            System.out.println("Nombre del hilo en main: " + nombreHilo);
             System.out.println("Prueba del nuevo proyecto");
+            System.out.println("Id: " + Thread.currentThread().threadId());
 
-            System.out.println("Guardando un mail: ");
-            Mail mail = new Mail();
-            mail.setDireccionOrigen("caiza@gmail.com");
-            mail.setDireccionDestino("calispa@gmail.com");
-            mail.setAsunto("Tarea 17");
-            mail.setCuerpo("Realizar la tarea 17, replicando lo hecho en el taller 26");
-            mail.setPrioridad("IMPORTANTE");
-            this.mailService.guardar(mail);
+            System.out.println("Prueba del nuevo proyecto");
+            Factura factura = new Factura();
+            factura.setFecha(LocalDate.of(2026, 6, 24));
+            factura.setNumero("f-002");
+            factura.setRuc("1722619580-001");
+            this.facturaService.guardar(factura);
 
-            Mail mailPorId = this.mailService.buscarPorId(1);
-            System.out.println("Mail con el id: " + mailPorId.getId() + " con el asunto: " + mailPorId.getAsunto());
-
-
-            System.out.println("Guardando un reporte: ");
-            Reporte reporte = new Reporte();
-            reporte.setAutor("Alex Caiza");
-            reporte.setTitulo("Tarea 17");
-            reporte.setCuerpo("Realizada la tarea 17");
-            reporte.setCantidadPalabras(3);
-            reporte.setObservacion("Ninguna observacion");
-            this.reporteService.guardar(reporte);
-
-            Reporte reportePorId = this.reporteService.buscarPorId(1);
-            System.out.println("Reporte con el id: " + reportePorId.getId() + " con el siguiente titulo: " + reportePorId.getTitulo());
+            Factura fact = this.facturaService.buscarPorId(1);
+            System.out.println("Factura: " + fact.getNumero());
             return 0;
         }
         
