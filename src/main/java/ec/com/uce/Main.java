@@ -3,6 +3,7 @@ package ec.com.uce;
 import java.time.LocalDate;
 
 import ec.com.uce.application.service.FacturaService;
+import ec.com.uce.application.service.FacturaServiceParalelo;
 import ec.com.uce.application.service.MailService;
 import ec.com.uce.application.service.ReporteService;
 import ec.com.uce.domain.model.Factura;
@@ -20,6 +21,9 @@ public class Main {
     }
     public static class App implements QuarkusApplication{
         @Inject
+        private FacturaServiceParalelo facturaServiceParalelo;
+
+        @Inject
         private FacturaService facturaService;
 
         @Override
@@ -30,14 +34,18 @@ public class Main {
             System.out.println("Id: " + Thread.currentThread().threadId());
 
             System.out.println("Prueba del nuevo proyecto");
-            Factura factura = new Factura();
-            factura.setFecha(LocalDate.of(2026, 6, 24));
-            factura.setNumero("f-002");
-            factura.setRuc("1722619580-001");
-            this.facturaService.guardar(factura);
+            //Factura factura = new Factura();
+            //factura.setFecha(LocalDate.of(2026, 6, 24));
+            //factura.setNumero("f-010");
+            //factura.setRuc("1722619580-001");
+            //this.facturaService.guardar(factura);
 
-            Factura fact = this.facturaService.buscarPorId(1);
-            System.out.println("Factura: " + fact.getNumero());
+            Factura factura1 = new Factura();
+            factura1.setFecha(LocalDate.of(2026, 6, 24));
+            factura1.setNumero("f-011");
+            factura1.setRuc("1722619580-001");
+            this.facturaServiceParalelo.guardar(factura1);
+
             return 0;
         }
         

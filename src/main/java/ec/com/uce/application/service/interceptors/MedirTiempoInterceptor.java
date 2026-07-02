@@ -18,7 +18,7 @@ public class MedirTiempoInterceptor {
             long fin = System.nanoTime();
             double tiempoTotal;
             tiempoTotal = (fin - inicio) / 1_000_000.0;
-            System.out.println("El tiempo que se tardo el metodo guardar es: " + tiempoTotal + " ms" );
+            System.out.println("El tiempo que se tardo el metodo guardar es: " + tiempoTotal + " ms en : " + context.getMethod() );
             
         }
     }

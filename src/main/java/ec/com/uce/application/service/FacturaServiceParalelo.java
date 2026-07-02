@@ -1,6 +1,9 @@
 package ec.com.uce.application.service;
 
-import org.hibernate.annotations.ListIndexJdbcTypeCode;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import ec.com.uce.application.service.interceptors.MedirTiempo;
 import ec.com.uce.domain.model.Factura;
@@ -13,38 +16,46 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 @Transactional
-public class FacturaService {
- 
+public class FacturaServiceParalelo {
     @Inject
     private FacturaRepositoryImpl facturaRepositoryImpl;
-    @Inject
+    @Inject 
     private ReporteService reporteService;
     @Inject
     private MailService mailService;
     @MedirTiempo
     public void guardar(Factura factura){
         String nombreHilo = Thread.currentThread().getName();
-        System.out.println("Nombre del hilo secuencial en factura: " + nombreHilo);
-        System.out.println("Id secuencial: " + Thread.currentThread().threadId());
+        System.out.println("Nombre del hilo en factura en paralelo: " + nombreHilo);
+        System.out.println("Id paralelo: " + Thread.currentThread().threadId());
         this.facturaRepositoryImpl.persist(factura);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+
         Reporte reporte = new Reporte();
-        reporte.setAutor("Alex Caiza");
+        reporte.setAutor("Alan Brito");
         reporte.setTitulo("Reporte de factura");
         reporte.setCuerpo("Entregando la factura ");
         reporte.setCantidadPalabras(3);
         reporte.setObservacion("Ninguna");
-        this.reporteService.guardar(reporte);
+
+        ReporteServiceTarea reporteTarea = new ReporteServiceTarea(reporte, reporteService);
+        executorService.submit(reporteTarea);
         
         Mail mail = new Mail();
         mail.setAsunto("Factura");
         mail.setCuerpo("Entregando una factura mediante correo");
         mail.setPrioridad("Urgente");
-        mail.setDireccionOrigen("alex@gmail.com");
-        mail.setDireccionDestino("javier@gmail.com");
-        this.mailService.guardar(mail);
-    }
-    public Factura buscarPorId(Integer id){
-        return this.facturaRepositoryImpl.findById(id);
+        mail.setDireccionOrigen("al@gmail.com");
+        mail.setDireccionDestino("mateor@gmail.com");
+        MailServiceTarea mailTarea = new MailServiceTarea(mail, mailService);
+        executorService.submit(mailTarea);
+        executorService.shutdown();
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
- 
