@@ -1,9 +1,10 @@
 package ec.com.uce.application.service.interceptors;
 
+import jakarta.annotation.Priority;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
-
+@Priority(0)
 @Interceptor
 @MedirTiempo
 public class MedirTiempoInterceptor {

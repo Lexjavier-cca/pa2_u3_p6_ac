@@ -1,7 +1,7 @@
 package ec.com.uce.application.service;
 
 import ec.com.uce.domain.model.Mail;
-import jakarta.inject.Inject;
+
 
 public class MailServiceTarea implements Runnable{
     //@Inject
@@ -16,7 +16,7 @@ public class MailServiceTarea implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Ejecutando el run en paralelo de reporte: " +
+        System.out.println("Ejecutando el run en paralelo mail: " +
             "Nombre del hilo: " + Thread.currentThread().getName()  +
             "Id del hilo: " + Thread.currentThread().threadId()
         );

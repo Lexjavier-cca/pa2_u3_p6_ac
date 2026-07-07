@@ -15,7 +15,7 @@ public class ReporteService {
     @MedirTiempo
     public void guardar(Reporte reporte){
         String nombreHilo = Thread.currentThread().getName();
-        System.out.println("Nombre del hilo en main: " + nombreHilo);
+        System.out.println("Nombre del hilo en guardar reporte: " + nombreHilo);
         System.out.println("Id: " + Thread.currentThread().threadId());
         this.reporteRepositoryImpl.persist(reporte);
     }

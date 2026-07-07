@@ -2,13 +2,11 @@ package ec.com.uce;
 
 import java.time.LocalDate;
 
-import ec.com.uce.application.service.FacturaService;
+import ec.com.uce.application.service.FacturaServiceCompleteFuture;
 import ec.com.uce.application.service.FacturaServiceParalelo;
-import ec.com.uce.application.service.MailService;
-import ec.com.uce.application.service.ReporteService;
+
 import ec.com.uce.domain.model.Factura;
-import ec.com.uce.domain.model.Mail;
-import ec.com.uce.domain.model.Reporte;
+
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
@@ -21,10 +19,10 @@ public class Main {
     }
     public static class App implements QuarkusApplication{
         @Inject
-        private FacturaServiceParalelo facturaServiceParalelo;
+        private FacturaServiceCompleteFuture facturaServiceFuture;
 
-        @Inject
-        private FacturaService facturaService;
+
+
 
         @Override
         public int run(String... args) throws Exception {
@@ -44,7 +42,7 @@ public class Main {
             factura1.setFecha(LocalDate.of(2026, 6, 24));
             factura1.setNumero("f-011");
             factura1.setRuc("1722619580-001");
-            this.facturaServiceParalelo.guardar(factura1);
+            this.facturaServiceFuture.guardar(factura1);
 
             return 0;
         }

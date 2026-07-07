@@ -14,7 +14,7 @@ public class MailService {
     @MedirTiempo
     public void guardar(Mail mail){
         String nombreHilo = Thread.currentThread().getName();
-        System.out.println("Nombre del hilo en mail " + nombreHilo);
+        System.out.println("Nombre del hilo en guardar mail " + nombreHilo);
         System.out.println("Id: " + Thread.currentThread().threadId());
         this.mailRepositoryImpl.persist(mail);
     }
