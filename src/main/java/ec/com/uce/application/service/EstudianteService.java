@@ -1,5 +1,6 @@
 package ec.com.uce.application.service;
 
+import ec.com.uce.application.service.interceptors.Archivar;
 import ec.com.uce.application.service.interceptors.AuditorActualizacion;
 import ec.com.uce.application.service.interceptors.AuditorCreacion;
 import ec.com.uce.application.service.interceptors.AuditorEliminacion;
@@ -15,6 +16,7 @@ public class EstudianteService {
     @Inject
     private EstudianteRepositoryImpl estudianteRepositoryImpl;
     @AuditorCreacion
+    @Archivar
     public void guardar(Estudiante estudiante){
         this.estudianteRepositoryImpl.persist(estudiante);
         
@@ -25,7 +27,8 @@ public class EstudianteService {
     }
     @AuditorEliminacion
     public void eliminar(Estudiante estudiante){
-        this.estudianteRepositoryImpl.getEntityManager().remove(estudiante);
+        Estudiante managed = estudianteRepositoryImpl.getEntityManager().merge(estudiante);
+        estudianteRepositoryImpl.getEntityManager().remove(managed);
     }
 
 }

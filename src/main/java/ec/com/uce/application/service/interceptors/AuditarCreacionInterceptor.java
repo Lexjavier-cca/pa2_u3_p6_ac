@@ -3,14 +3,19 @@ package ec.com.uce.application.service.interceptors;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import ec.com.uce.application.service.AuditoriaService;
 import ec.com.uce.domain.model.Auditoria;
+import jakarta.annotation.Priority;
+import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
-
+@Priority(1)
 @Interceptor
 @AuditorCreacion
-public class AuditorCreacionInterceptor{
+public class AuditarCreacionInterceptor{
+    @Inject
+    private AuditoriaService auditoriaService;
     @AroundInvoke
     public Object auditar(InvocationContext ctx) throws Exception{
         System.out.println("Iniciando la auditoria del metodo guardar");
@@ -34,7 +39,8 @@ public class AuditorCreacionInterceptor{
             auditoria.setFechaHoraEjecucion(fechaEjecucion);
             auditoria.setNombreMetodo(nombreMetodo);
             auditoria.setArgumento(argumentos);
-             System.out.println(auditoria.toString());
+            System.out.println(auditoria.toString());
+            this.auditoriaService.guardar(auditoria);
 
         }   
     }

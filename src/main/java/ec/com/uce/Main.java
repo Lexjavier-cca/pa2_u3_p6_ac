@@ -2,9 +2,11 @@ package ec.com.uce;
 
 import java.time.LocalDate;
 
+import ec.com.uce.application.service.AuditoriaService;
 import ec.com.uce.application.service.EstudianteService;
 import ec.com.uce.application.service.FacturaServiceCompleteFuture;
 import ec.com.uce.application.service.FacturaServiceParalelo;
+import ec.com.uce.domain.model.Auditoria;
 import ec.com.uce.domain.model.Estudiante;
 import ec.com.uce.domain.model.Factura;
 
@@ -21,6 +23,8 @@ public class Main {
     public static class App implements QuarkusApplication{
         @Inject
         private EstudianteService estudianteService;
+        @Inject
+        private AuditoriaService auditoriaService;
 
 
 
@@ -32,6 +36,14 @@ public class Main {
             estudiante.setNombre("Alex Caiza");
             estudiante.setSemestre(6);
             this.estudianteService.guardar(estudiante);
+
+            estudiante.setSemestre(7);
+            this.estudianteService.actualizar(estudiante);
+
+            this.estudianteService.eliminar(estudiante);
+
+            
+
 
             return 0;
         }
