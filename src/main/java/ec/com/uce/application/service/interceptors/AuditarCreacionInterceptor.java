@@ -38,7 +38,7 @@ public class AuditarCreacionInterceptor{
             auditoria.setTiempoEjecucionMs(tiempoTotal);
             auditoria.setFechaHoraEjecucion(fechaEjecucion);
             auditoria.setNombreMetodo(nombreMetodo);
-            auditoria.setArgumento(argumentos);
+            auditoria.setArgumento(null);
             System.out.println(auditoria.toString());
             this.auditoriaService.guardar(auditoria);
 
