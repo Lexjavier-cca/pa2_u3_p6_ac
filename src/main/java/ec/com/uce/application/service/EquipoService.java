@@ -24,4 +24,10 @@ public class EquipoService {
             this.guardar(equipo);
         }
     }
+    @AuditorCreacion
+    public void guardarListaParalelo(List<Equipo> equipos){
+        equipos.parallelStream().forEach(equi ->{
+            this.guardar(equi);
+        });
+    }
 }

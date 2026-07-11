@@ -30,7 +30,7 @@ public class Main {
             List<Equipo> lista = new ArrayList<>();
             Random random = new Random();
             
-            for(int i=1; i <= 500; i++){
+            for(int i=1; i <= 500000; i++){
                 Equipo e1 = new Equipo();
                 e1.setNombre("Equipo " + i);
                 e1.setPais("Ecuador");
@@ -39,7 +39,8 @@ public class Main {
                 lista.add(e1);
             }
 
-            this.equipoService.guardarLista(lista);
+            //this.equipoService.guardarLista(lista);
+            this.equipoService.guardarListaParalelo(lista);
             
             return 0;
         }
