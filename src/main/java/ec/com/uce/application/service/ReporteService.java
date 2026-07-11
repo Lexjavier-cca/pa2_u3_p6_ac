@@ -20,12 +20,12 @@ public class ReporteService {
         String nombreHilo = Thread.currentThread().getName();
         System.out.println("Nombre del hilo en guardar reporte: " + nombreHilo);
         System.out.println("Id: " + Thread.currentThread().threadId());
-        try {
-            Thread.sleep(3000);
+        /*try {
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
         this.reporteRepositoryImpl.persist(reporte);
     }
     @AuditorCreacion
@@ -33,6 +33,13 @@ public class ReporteService {
         for(Reporte reporte : lista){
             this.guardar(reporte);
         }
+    }
+    @AuditorCreacion
+    public void guardarListaReportesParalelo(List<Reporte> lista){
+        lista.parallelStream().forEach(reporte -> {
+            //Se programa la lógica que quiero que se aplique a cada item de la lista
+            this.guardar(reporte);
+        });
     }
     public Reporte buscarPorId(Integer id){
         return this.reporteRepositoryImpl.findById(id);

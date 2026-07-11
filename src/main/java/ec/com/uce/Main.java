@@ -35,14 +35,15 @@ public class Main {
             System.out.println("Iniciando las auditorias");
             List<Reporte> lista = new ArrayList<>();
             
-            for(int i=0; i <= 10; i++){
+            for(int i=0; i <= 100000; i++){
                 Reporte r1 = new Reporte();
-                r1.setAutor("Alex");
-                r1.setCuerpo("Mañana es un buen día" + i);
+                r1.setAutor("Lucia11");
+                r1.setCuerpo("Mensaje de Lucia11 N " + i);
                 lista.add(r1);
             }
 
             this.reporteService.guardarListaReportes(lista);
+            //this.reporteService.guardarListaReportesParalelo(lista);
             
 
             
